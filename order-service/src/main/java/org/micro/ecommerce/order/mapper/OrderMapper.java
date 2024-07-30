@@ -23,6 +23,7 @@ public class OrderMapper {
                 order.getId(),
                 order.getReference(),
                 order.getTotalAmount(),
+                order.getPaymentMethod(),
                 order.getCustomerId()
         );
     }

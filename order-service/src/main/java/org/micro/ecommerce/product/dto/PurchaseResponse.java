@@ -1,7 +1,7 @@
-package org.micro.ecommerce.product.dto.purchase;
+package org.micro.ecommerce.product.dto;
 
 import java.math.BigDecimal;
 
-public record ProductPurchaseResponse(
+public record PurchaseResponse(
         Integer productId, String name, String description, BigDecimal price, double quantity
 ) {}
