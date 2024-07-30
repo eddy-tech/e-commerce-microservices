@@ -1,5 +1,6 @@
 package org.micro.ecommerce.orderLine.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -27,6 +28,7 @@ public class OrderLine {
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
+    @Column(name = "product_id")
     private Integer productId;
     private double quantity;
 }

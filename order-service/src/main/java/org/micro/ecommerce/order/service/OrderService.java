@@ -12,6 +12,8 @@ import org.micro.ecommerce.order.mapper.OrderMapper;
 import org.micro.ecommerce.order.repository.OrderRepository;
 import org.micro.ecommerce.orderLine.dto.OrderLineRequest;
 import org.micro.ecommerce.orderLine.service.OrderLineService;
+import org.micro.ecommerce.payment.apiClient.PaymentClient;
+import org.micro.ecommerce.payment.dto.PaymentRequest;
 import org.micro.ecommerce.product.apiClient.ProductClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +31,7 @@ public class OrderService {
     private final OrderLineService orderLineService;
     private final ProductClient productClient;
     private final OrderProducer orderProducer;
+    private final PaymentClient paymentClient;
 
     public Integer createOrder (OrderRequest request) {
         // check the customer
@@ -39,19 +42,23 @@ public class OrderService {
         // purchase the products -> product- ms
         var purchasedProducts = productClient.purchaseProducts(request.products());
         // persist order lines
-        var order = orderRepository.save(orderMapper.toOrder(request));
+        var order = this.orderRepository.save(orderMapper.toOrder(request));
 
         for(var purchaseRequest : request.products()) {
-            orderLineService.saveOrderLine(
+            this.orderLineService.saveOrderLine(
                     new OrderLineRequest(
                             null, order.getId(), purchaseRequest.productId(), purchaseRequest.quantity()
                     )
             );
         }
         //start payment process
+        var paymentRequest = new PaymentRequest(
+                request.amount(), request.paymentMethod(), order.getId(), order.getReference(), customer
+        );
+        this.paymentClient.requestOrderPayment(paymentRequest);
 
         // send the order confirmation -- > notification-ms (kafka)
-        orderProducer.sendOrderConfirmation(
+        this.orderProducer.sendOrderConfirmation(
                 new OrderConfirmation(
                         request.reference(),
                         request.amount(),
