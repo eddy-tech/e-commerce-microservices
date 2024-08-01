@@ -2,7 +2,7 @@ package org.micro.ecommerce.payment.service;
 
 import lombok.RequiredArgsConstructor;
 import org.micro.ecommerce.core.kafka.NotificationProducer;
-import org.micro.ecommerce.core.kafka.PaymentNotification;
+import org.micro.ecommerce.core.kafka.PaymentConfirmation;
 import org.micro.ecommerce.payment.dto.PaymentRequest;
 import org.micro.ecommerce.payment.mapper.PaymentMapper;
 import org.micro.ecommerce.payment.repository.PaymentRepository;
@@ -19,7 +19,7 @@ public class PaymentService {
         var payment = this.paymentRepository.save(this.paymentMapper.toPayment(request));
 
         this.notificationProducer.sendNotification(
-                new PaymentNotification(
+                new PaymentConfirmation(
                         request.orderReference(),
                         request.amount(),
                         request.paymentMethod(),

@@ -14,13 +14,13 @@ import static org.springframework.kafka.support.KafkaHeaders.TOPIC;
 @RequiredArgsConstructor
 @Slf4j
 public class NotificationProducer {
-    private final KafkaTemplate<String, PaymentNotification> kafkaTemplate;
+    private final KafkaTemplate<String, PaymentConfirmation> kafkaTemplate;
     @Value("${spring.kafka.topic.name}")
     private String topicName;
 
-    public void sendNotification(PaymentNotification request) {
+    public void sendNotification(PaymentConfirmation request) {
         log.info("Sending notification with body = < {} >", request);
-        Message<PaymentNotification> message = MessageBuilder
+        Message<PaymentConfirmation> message = MessageBuilder
                 .withPayload(request)
                 .setHeader(TOPIC, topicName)
                 .build();

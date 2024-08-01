@@ -11,7 +11,6 @@ import org.micro.notification.notification.utils.NotificationType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
@@ -20,7 +19,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Document
-public class Notification implements Serializable {
+public class Notification {
     @Id
     private String id;
     private NotificationType type;
