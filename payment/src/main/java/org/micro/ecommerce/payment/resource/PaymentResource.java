@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static org.springframework.http.HttpStatus.CREATED;
+
 @RestController
 @RequestMapping("/api/v1/payments")
 @RequiredArgsConstructor
@@ -18,6 +20,6 @@ public class PaymentResource {
 
     @PostMapping
     public ResponseEntity<Integer> createPayment(@RequestBody @Valid PaymentRequest request) {
-        return ResponseEntity.ok(this.paymentService.createPayment(request));
+        return new ResponseEntity<>(this.paymentService.createPayment(request), CREATED);
     }
 }

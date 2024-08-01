@@ -12,7 +12,7 @@ import org.micro.notification.notification.repository.NotificationRepository;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 import static java.lang.String.format;
 import static org.micro.notification.notification.utils.NotificationType.ORDER_CONFIRMATION;
@@ -26,13 +26,13 @@ public class NotificationConsumer {
     private final PaymentEmailService paymentEmail;
     private final OrderEmailService orderEmail;
 
-    @KafkaListener(topics = "${spring.kafka.topic.name}")
+    @KafkaListener(topics = "payment_topic")
     public void consumePaymentSuccessNotification(PaymentConfirmation paymentConfirmation) throws MessagingException {
         log.info(format("Consuming the message from payment-topic Topic:: %s", paymentConfirmation));
         this.notificationRepository.save(
                 Notification.builder()
                         .type(PAYMENT_CONFIRMATION)
-                        .notificationDate(ZonedDateTime.now())
+                        .notificationDate(LocalDateTime.now())
                         .paymentConfirmation(paymentConfirmation)
                         .build()
         );
@@ -46,13 +46,13 @@ public class NotificationConsumer {
         );
     }
 
-    @KafkaListener(topics = "${spring.kafka.topic.name}")
+    @KafkaListener(topics = "order_topic")
     public void consumeOrderConfirmationNotification(OrderConfirmation orderConfirmation) throws MessagingException {
         log.info(format("Consuming the message from order-topic Topic:: %s", orderConfirmation));
         this.notificationRepository.save(
                 Notification.builder()
                         .type(ORDER_CONFIRMATION)
-                        .notificationDate(ZonedDateTime.now())
+                        .notificationDate(LocalDateTime.now())
                         .orderConfirmation(orderConfirmation)
                         .build()
         );

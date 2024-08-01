@@ -12,7 +12,7 @@ spring:
 
   kafka:
     topic:
-      name: order-topic
+      name: order_topic
     producer:
       bootstrap-servers: localhost:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer

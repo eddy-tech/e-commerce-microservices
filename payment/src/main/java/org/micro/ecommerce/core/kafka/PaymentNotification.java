@@ -1,10 +1,10 @@
-package org.micro.ecommerce.core.notification;
+package org.micro.ecommerce.core.kafka;
 
 import org.micro.ecommerce.payment.utils.PaymentMethod;
 
 import java.math.BigDecimal;
 
-public record PaymentNotificationRequest(
+public record PaymentNotification(
         String orderReference, BigDecimal amount, PaymentMethod paymentMethod, String customerFirstname,
         String customerLastname, String customerEmail
 ) {}

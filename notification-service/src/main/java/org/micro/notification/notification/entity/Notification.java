@@ -11,7 +11,8 @@ import org.micro.notification.notification.utils.NotificationType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.ZonedDateTime;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,11 +20,11 @@ import java.time.ZonedDateTime;
 @Getter
 @Setter
 @Document
-public class Notification {
+public class Notification implements Serializable {
     @Id
     private String id;
     private NotificationType type;
-    private ZonedDateTime notificationDate;
+    private LocalDateTime notificationDate;
     private OrderConfirmation orderConfirmation;
     private PaymentConfirmation paymentConfirmation;
 }

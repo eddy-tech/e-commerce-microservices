@@ -6,12 +6,14 @@ import org.micro.ecommerce.orderLine.dto.OrderLineResponse;
 import org.micro.ecommerce.orderLine.mapper.OrderLineMapper;
 import org.micro.ecommerce.orderLine.repository.OrderLineRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class OrderLineService {
     private final OrderLineRepository orderLineRepository;
     private final OrderLineMapper orderLineMapper;

@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/payments
+    url: jdbc:postgresql://localhost:5432/payment
     username: koko
     password: password123
     driver-class-name: org.postgresql.Driver
@@ -12,13 +12,13 @@ spring:
 
   kafka:
     topic:
-      name: payment-topic
+      name: payment_topic
     producer:
       bootstrap-servers: localhost:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
-        spring.json.type.mapping: paymentConfirmation:org.micro.ecommerce.notification.PaymentNotificationRequest
+        spring.json.type.mapping: paymentConfirmation:org.micro.ecommerce.core.kafka.PaymentNotification
 
 application:
   config:
